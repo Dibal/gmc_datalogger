@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>744</width>
+    <width>710</width>
     <height>600</height>
    </rect>
   </property>
@@ -23,10 +23,10 @@
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>13</x>
-      <y>20</y>
-      <width>311</width>
-      <height>511</height>
+      <x>0</x>
+      <y>10</y>
+      <width>361</width>
+      <height>531</height>
      </rect>
     </property>
     <property name="font">
@@ -39,26 +39,39 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>30</y>
-      <width>388</width>
-      <height>614</height>
+      <x>370</x>
+      <y>10</y>
+      <width>331</width>
+      <height>441</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Source:</string>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="toolTip">
-          <string>Show selected file.</string>
+        <widget class="QLabel" name="label_9">
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>GMC-3xx Datalogger</string>
          </property>
         </widget>
        </item>
@@ -113,16 +126,6 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButtonLiveData">
-             <property name="toolTip">
-              <string>(not implemented)</string>
-             </property>
-             <property name="text">
-              <string>Live data</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="label_12">
              <property name="text">
               <string/>
@@ -136,64 +139,78 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="label_10">
+      <widget class="QPushButton" name="pushButtonLiveData">
+       <property name="toolTip">
+        <string>(not implemented)</string>
+       </property>
        <property name="text">
-        <string>Destination:</string>
+        <string>Live data</string>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
-           <item>
-            <widget class="QPushButton" name="pushButtonwritedata">
-             <property name="toolTip">
-              <string>Write data to file.</string>
-             </property>
-             <property name="text">
-              <string>Write data</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioButtonCSV">
-             <property name="toolTip">
-              <string>Save text file</string>
-             </property>
-             <property name="text">
-              <string>CSV</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioButtonBin">
-             <property name="toolTip">
-              <string>Save binary file in device format</string>
-             </property>
-             <property name="text">
-              <string>Binary</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label_10">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Save to file:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonwritedata">
+           <property name="toolTip">
+            <string>Write data to file.</string>
+           </property>
+           <property name="text">
+            <string>Write data</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButtonCSV">
+           <property name="toolTip">
+            <string>Save text file</string>
+           </property>
+           <property name="text">
+            <string>CSV</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButtonBin">
+           <property name="toolTip">
+            <string>Save binary file in device format</string>
+           </property>
+           <property name="text">
+            <string>Binary</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Serial connection:</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -290,7 +307,7 @@
             <string>Set serial connection</string>
            </property>
            <property name="text">
-            <string>Set</string>
+            <string>Serial</string>
            </property>
           </widget>
          </item>
@@ -340,20 +357,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
   </widget>
@@ -362,7 +365,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>744</width>
+     <width>710</width>
      <height>25</height>
     </rect>
    </property>

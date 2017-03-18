@@ -9,8 +9,6 @@
 # versions:
 # vers 2017-03: modified as library for GUI 
 
-
-from docopt import docopt
 import datetime
 import struct
 import time
@@ -40,7 +38,11 @@ def getCPM(ser):
     # get CPM from device
     ser.write(b'<GETCPM>>')
     rec = ser.read(2)
-    return ord(rec[0])<< 8 | ord(rec[1])
+    try:
+        s1= ord(rec[0])<< 8 | ord(rec[1])
+    except IndexError:
+        s1= ord("\x00")
+    return s1
     
     
 def getDate(ser):

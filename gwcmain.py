@@ -5,7 +5,10 @@
 '''
 Read and process history data recorded by Geiger Counter GMC-3xx
 
+Vers 0.7, 2017-03-17 (rimbus)
 
+Software may be free to use according to GPL3
+https://www.gnu.org/licenses/gpl-3.0.de.html 
 '''
 
 
@@ -30,7 +33,7 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         self.setupUi(self)  # automatically created in gwcp
         
         # define some global variables (might be improved later)
-        helptextname="readme.md"
+        helptextname="help.md"
         data =''
         ser=''
         serialdev='/dev/ttyUSB0'
@@ -183,6 +186,9 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
             ser = serial.Serial(serialdev, speed, timeout= 3)
         if self.pushButtonLiveData.isChecked():
             self.writeplain("* Live data:")
+            self.pushButtonLiveData.setStyleSheet("background-color: red")
+        else:
+            self.pushButtonLiveData.setStyleSheet("background-color: none")
         ta=''
         while self.pushButtonLiveData.isChecked():
             QtGui.QApplication.processEvents()
