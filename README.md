@@ -1,7 +1,5 @@
 # GMC-3xx Datalogger
 
-![GUI Interface](gmc_data_logger_software.png)
-
 ## Overview
 
 The Python routines read data logged by the Geiger-Counter GMC-3xx (_GQelectronics_).
@@ -31,17 +29,30 @@ The routines take advantage of the ICD document by gqmc and I/O routines by Ulli
 
 ## Installation
 
+Requirements:
+
+* Python 2.7 and following libraries:
+* pyqt4
+* datetime
+* struct
+* time
+* os
+* serial   
+ 
 Save files below in a directory and start:
 
     $ python gwcmain.py
     
+Connect the device and check serial connection, eg by pressing "Get time". If connection is fine the device time is shown, together with the time of the system. If connection fails check baud rate and serial device name.
+    
 Files:
- * gwcmain.py    # main python program
- * gwcp3.py      # GUI definition file
- * gmcparse6.py  # basic I/O routines
- * gmcicon32.png # program icon
+* gwcmain.py    # main python program
+* gwcp3.py      # GUI definition file
+* gmcparse6.py  # basic I/O routines
+* gmcicon32.png # program icon
+* help.md       # this file 
 
-The program was developed under Linux. Other operating systems may work as well, perhaps the serial interface name has to be adapted (may be valid for other Linux system as well).
+The program was developed under Linux. Other operating systems may work as well, perhaps the serial interface name has to be adapted (may be valid for other Linux system as well). Windows requires a serial/usb driver.
 
 ## License
 
