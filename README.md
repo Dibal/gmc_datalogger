@@ -1,5 +1,7 @@
 # GMC-3xx Datalogger
 
+![Datalogger GUI](gmc_data_logger_software.png)
+
 ## Overview
 
 The Python routines read data logged by the Geiger-Counter GMC-3xx (_GQelectronics_).
