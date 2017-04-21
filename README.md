@@ -77,6 +77,6 @@ Four solutions:
  * [ullix](https://sourceforge.net/projects/geigerlog/) Basic I/O Python routines
  * [GQelectronics GMC Manual](https://www.gqelectronicsllc.com/comersus/store/download.asp)
  * [GQelectronics GMC Forum](https://www.gqelectronicsllc.com/forum/forum.asp?FORUM_ID=14)
- * [Complete GUI Python script](https://www.gqelectronicsllc.com/forum/topic.asp?TOPIC_ID=4490)
+ * [Complete GUI Python script by Ullix](https://sourceforge.net/projects/geigerlog/)
 
 
