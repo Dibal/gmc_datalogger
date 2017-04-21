@@ -53,6 +53,7 @@ Files:
 * gmcparse6.py  # basic I/O routines
 * gmcicon32.png # program icon
 * help.md       # this file 
+* gmcparse5.py  # Independent self-sufficient CLI (command line) Python script for reading data logger memory.
 
 The program was developed under Linux. Other operating systems may work as well, perhaps the serial interface name has to be adapted (may be valid for other Linux system as well). Windows requires a serial/usb driver.
 
@@ -60,10 +61,22 @@ The program was developed under Linux. Other operating systems may work as well,
 
 GNU General Public License version 3.0 (GPLv3) (https://www.gnu.org/licenses/gpl-3.0.de.html)
 
+## Limitations
+Live data routine uses processEvents(). _This is usually a workaround for poor design..._
+
+Four solutions:
+
+* You may use _Live data_ and keep in mind that it is a burden for the computer.
+* You may use the software only for accessing memory data and waive the live data option.
+* You may use the CLI version (without live data option).
+* You may use the _Complete GUI Python Script_, see references.
+
+
 ## References:
  * [gqmc](https://sourceforge.net/projects/gqgmc/files/gqgmc/): C-program, ICD and other documentations
  * [ullix](https://sourceforge.net/projects/geigerlog/) Basic I/O Python routines
  * [GQelectronics GMC Manual](https://www.gqelectronicsllc.com/comersus/store/download.asp)
  * [GQelectronics GMC Forum](https://www.gqelectronicsllc.com/forum/forum.asp?FORUM_ID=14)
+ * [Complete GUI Python script](https://www.gqelectronicsllc.com/forum/topic.asp?TOPIC_ID=4490)
 
 
