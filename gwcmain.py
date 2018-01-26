@@ -22,22 +22,16 @@ import time
 
 class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
     def __init__(self):
-        global data
-        global ser
-        global serialdev
-        global speed
-        global helptextname
-    
         super(self.__class__, self).__init__()
         self.setupUi(self)  # automatically created in gwcp
         
         # define some global variables (might be improved later)
-        helptextname = "help.md"
-        data = ''
-        ser = ''
+        self.helptextname = "help.md"
+        self.data = ''
+        self.ser = None
         serialdev = '/dev/ttyUSB0'
-        #speed = 115200
-        speedid = 0
+        # self.speed = 115200
+        self.speedid = 1
         #ser = serial.Serial('/dev/ttyUSB0', 115200, timeout= 3)
         
         self.statusBar().showMessage("...") 
@@ -47,8 +41,8 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         self.radioButtonCSV.setChecked(True)
         
         # preselect baud rate
-        self.listWidgetspeed.setCurrentRow(speedid)
-        speed = int(self.listWidgetspeed.currentItem().text())
+        self.listWidgetspeed.setCurrentRow(self.speedid)
+        self.speed = int(self.listWidgetspeed.currentItem().text())
         self.lineEditsetDev.setText(serialdev)
         
         # load bin file
@@ -76,69 +70,57 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         
     # menubar
     def windowaction(self, q):
-        global helptextname
-        global ser
-        
         print "triggered by menubar", q.text()
         if q.text() == "&Quit":
             sys.exit()
         elif q.text() == "Show Helpfile":
-            with open(helptextname, mode='rb') as file:  
-                helptext = file.read()  
+            with open(self.helptextname, mode='rb') as f:
+                helptext = f.read()
             self.clearplain()
             self.writeplain(helptext)
 
     def readbinfile(self):
-        global data
-        
-        fname = QtGui.QFileDialog.getOpenFileName(self, 'Open file', '',"Data files (*.*)")
+        fname = QtGui.QFileDialog.getOpenFileName(self, 'Open file', '', "Data files (*.*)")
         with open(fname, mode='rb') as f:
-            data = f.read()
-        msg = "{:d} bytes loaded from {:s}".format(len(data), fname)
+            self.data = f.read()
+        msg = "{:d} bytes loaded from {:s}".format(len(self.data), fname)
         self.statusBar().showMessage(msg) 
         self.processdata()
 
     def readdev(self):
-        global ser, data
-        
         # ser not defined in init in order to process files even if no device connected
-        if not ser:
+        if not self.ser:
             # print "set ser"
             # ser = serial.Serial('/dev/ttyUSB0', 115200, timeout= 3)
-            ser = serial.Serial(serialdev, speed, timeout=3)
+            self.serialdev = str(self.lineEditsetDev.text())
+            self.speed = int(self.listWidgetspeed.currentItem().text())
+            self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
         self.statusBar().clear()
         self.statusBar().showMessage("loading...") 
         print "loading..."
-        data = readHIST(ser)
-        msg = "{:d} bytes read from device".format(len(data))
+        self.data = readHIST(self.ser)
+        msg = "{:d} bytes read from device".format(len(self.data))
         self.statusBar().showMessage(msg) 
         self.processdata()
 
     def checkserial(self):
-        global speed
-        global serialdev
-        global ser
-        
-        serialdev = self.lineEditsetDev.text().toUtf8()
-        # speed= int(self.listWidgetspeed.item(1).text())
-        speed = int(self.listWidgetspeed.currentItem().text())
-        msg = "Serial interface: {:s} at {:d} baud".format(serialdev, speed)
-        ser = serial.Serial(serialdev, speed, timeout=3)
+        self.serialdev = str(self.lineEditsetDev.text())
+        self.speed = int(self.listWidgetspeed.currentItem().text())
+        msg = "Serial interface: {:s} at {:d} baud".format(self.serialdev, self.speed)
+        self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
         self.statusBar().showMessage(msg)
 
     def writedatafile(self):
-        global data
-        
-        if len(data) > 1:
+        if len(self.data) > 1:
             fn = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", "*.*")
             if self.radioButtonBin.isChecked():
                 print "binary choosen"
                 with open(fn, mode='wb') as f:
-                    f.write(data)
-                msgs = "{:d} bytes saved to {:s}".format(len(data), fn)
+                    f.write(self.data)
+                msgs = "{:d} bytes saved to {:s}".format(len(self.data), fn)
             else:
-                analyse(self, data, fn, self.checkBox.isChecked())
-                msgs = "{:d} bytes converted and saved to {:s}".format(len(data), fn)
+                analyse(self, self.data, fn, self.checkBox.isChecked())
+                msgs = "{:d} bytes converted and saved to {:s}".format(len(self.data), fn)
         else:
             msgs = "No data to save"
         self.statusBar().showMessage(msgs)
@@ -146,7 +128,7 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
     # process data
     def processdata(self):
         self.plainTextEdit.clear()
-        msgs = analyse(self, data, '', self.checkBox.isChecked())
+        msgs = analyse(self, self.data, '', self.checkBox.isChecked())
         if msgs:
             self.plainTextEdit.appendPlainText(msgs)
             self.statusBar().showMessage("Valid data?")
@@ -155,28 +137,23 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
             # self.statusBar().showMessage("done")
 
     def timeinfo(self):
-        global ser
-        
-        if not ser:
-            ser = serial.Serial(serialdev, speed, timeout=3)
-        dtime = getDate(ser)
+        if not self.ser:
+            self.serialdev = str(self.lineEditsetDev.text())
+            self.speed = int(self.listWidgetspeed.currentItem().text())
+            self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
+        dtime = getDate(self.ser)
         stime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
         print "GMC device date:", dtime
         print "(interface date: ", stime
         self.lineEditgetTime.setText(dtime)
         self.lineEditSystemTime.setText(stime)
-        print "enter demo  loop"
-        for i in range(0, 1000000):
-            i*i*i
-            QtGui.QApplication.processEvents()
-        print "demoloop ended"
             
     # requires pushButtonLiveData
     def livedata(self):
-        global ser
-        
-        if not ser:
-            ser = serial.Serial(serialdev, speed, timeout= 3)
+        if not self.ser:
+            self.serialdev = str(self.lineEditsetDev.text())
+            self.speed = int(self.listWidgetspeed.currentItem().text())
+            self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
         if self.pushButtonLiveData.isChecked():
             self.writeplain("* Live data:")
             self.pushButtonLiveData.setStyleSheet("background-color: red")
@@ -185,8 +162,8 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         ta = ''
         while self.pushButtonLiveData.isChecked():
             QtGui.QApplication.processEvents()
-            ds= "{:s}  {:d}".format(getDate(ser), getCPM(ser))
-            tn= ds[-6:-4]
+            ds = "{:s}  {:d}".format(getDate(self.ser), getCPM(self.ser))
+            tn = ds[-6:-4]
             if ta != tn:
                 self.writeplain(ds)
                 ta = tn
@@ -200,7 +177,6 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
     
     
 def main():
-    global form
     app = QtGui.QApplication(sys.argv)  # instance of QApplication
     #set icon:
     app.setWindowIcon(QtGui.QIcon("gmcicon32.png")) # GUI icon
