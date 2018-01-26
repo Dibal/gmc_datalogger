@@ -13,7 +13,6 @@ import datetime
 import struct
 import time
 import sys
-import serial       
 
 
 vers = "GMCparse 2017-03-17"
@@ -31,7 +30,7 @@ def getVER(ser):
     # includes 7 bytes hardware model and 7 bytes firmware version.
     # e.g.: GMC-300Re 4.20
     # (ullix)
-    rec = serialCOMM(ser, b'<GETVER>>', 14, False) # returns ASCII string
+    rec = serialCOMM(ser, b'<GETVER>>', 14, False)  # returns ASCII string
     return rec
     
     
@@ -123,7 +122,8 @@ def serialCOMM(ser, sendtxt, returnlength, byteformat=True):
         print "\nERROR in Serial Read", sys.exc_info()
         ser.close()
         sys.exit(1)
-    if byteformat: rec = map(ord,rec) # convert string to list of int
+    if byteformat:
+        rec = map(ord, rec)  # convert string to list of int
     return rec
   
     
@@ -135,11 +135,10 @@ def readHIST(ser):
     verbose = ""
     allspir = ""
     # read data from device
-    for chunk in range(0, 16): # all 64k data
-    #for chunk in range(0, 1):   # only first 4096 bytes
+    for chunk in range(0, 16):  # all 64k data
         time.sleep(0.5)         # fails occasionally to read all data
                                 # when sleep is too short
-        allspir += getSPIR(ser, chunk * 4096 , 4096)
+        allspir += getSPIR(ser, chunk * 4096, 4096)
         if (ord(allspir[-1]) == 0xff) and (ord(allspir[-2]) == 0xff) and (ord(allspir[-3]) == 0xff):
             if verbose:
                 print "Device memory: {:02d} pages (4096 each) out of 16 read".format(chunk+1)
@@ -177,16 +176,16 @@ def analyse(form, data, fn, verbose=True):
     55 AA 02 str_length chr1 chr2 ...
     """
 
-    idcpm = 2 # id_cpm
+    idcpm = 2  # id_cpm
     tick = datetime.timedelta(minutes=1)
     dp = 0    # data pointer
     ccount = 0  # counted events; <0 if no counter value found but date or other control value
-    msgv = '' #verbose message
-    msge = '' #error message
+    msgv = ''  # verbose message
+    msge = ''  # error message
     fullout = False
     limitlines = 30
 
-    datenow = datetime.datetime(1950, 01, 22, 11, 12, 13)  #  arabitrary time as init value (< 2000)
+    datenow = datetime.datetime(1950, 01, 22, 11, 12, 13)  # arabitrary time as init value (< 2000)
     
     if fn:
         f = open(fn, "w")
