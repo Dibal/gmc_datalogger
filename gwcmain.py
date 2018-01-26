@@ -108,10 +108,8 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         self.processdata()
 
     def checkserial(self):
-        self.serialdev = str(self.lineEditsetDev.text())
-        self.speed = int(self.listWidgetspeed.currentItem().text())
+        self.check_serial()
         msg = "Serial interface: {:s} at {:d} baud".format(self.serialdev, self.speed)
-        self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
         self.statusBar().showMessage(msg)
 
     def writedatafile(self):
@@ -141,10 +139,7 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
             # self.statusBar().showMessage("done")
 
     def timeinfo(self):
-        if not self.ser:
-            self.serialdev = str(self.lineEditsetDev.text())
-            self.speed = int(self.listWidgetspeed.currentItem().text())
-            self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
+        self.check_serial()
         dtime = getDate(self.ser)
         stime = "{:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
         print "GMC device date:", dtime
@@ -153,22 +148,22 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         self.lineEditSystemTime.setText(stime)
 
     def setdevicetime(self):
-        if not self.ser:
-            self.serialdev = str(self.lineEditsetDev.text())
-            self.speed = int(self.listWidgetspeed.currentItem().text())
-            self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
+        self.check_serial()
         nowtime = datetime.datetime.now()
         stime = "{:%Y-%m-%d %H:%M:%S}".format(nowtime)
         print "(interface date: ", stime
         self.lineEditSystemTime.setText(stime)
         setDate(self.ser, nowtime)
-            
-    # requires pushButtonLiveData
-    def livedata(self):
+
+    def check_serial(self):
         if not self.ser:
             self.serialdev = str(self.lineEditsetDev.text())
             self.speed = int(self.listWidgetspeed.currentItem().text())
             self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
+
+    # requires pushButtonLiveData
+    def livedata(self):
+        self.check_serial()
         if self.pushButtonLiveData.isChecked():
             self.writeplain("* Live data:")
             self.pushButtonLiveData.setStyleSheet("background-color: red")
