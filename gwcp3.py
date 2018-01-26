@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'gwcp3.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created by: PyQt4 UI code generator 4.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -44,6 +44,7 @@ class Ui_MainWindow(object):
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(370, 10, 331, 441))
         self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
@@ -190,6 +191,12 @@ class Ui_MainWindow(object):
         self.lineEditSystemTime.setObjectName(_fromUtf8("lineEditSystemTime"))
         self.horizontalLayout_14.addWidget(self.lineEditSystemTime)
         self.verticalLayout_4.addLayout(self.horizontalLayout_14)
+        self.horizontalLayout_131 = QtGui.QHBoxLayout()
+        self.horizontalLayout_131.setObjectName(_fromUtf8("horizontalLayout_131"))
+        self.pushButtonsetTime = QtGui.QPushButton(self.verticalLayoutWidget)
+        self.pushButtonsetTime.setObjectName(_fromUtf8("pushButtonsetTime"))
+        self.horizontalLayout_131.addWidget(self.pushButtonsetTime)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_131)
         self.horizontalLayout_15 = QtGui.QHBoxLayout()
         self.horizontalLayout_15.setObjectName(_fromUtf8("horizontalLayout_15"))
         self.verticalLayout_4.addLayout(self.horizontalLayout_15)
@@ -268,6 +275,8 @@ class Ui_MainWindow(object):
         self.lineEditgetTime.setToolTip(_translate("MainWindow", "Device Time", None))
         self.label_13.setText(_translate("MainWindow", "System time", None))
         self.lineEditSystemTime.setToolTip(_translate("MainWindow", "System time", None))
+        self.pushButtonsetTime.setToolTip(_translate("MainWindow", "Set device date and time", None))
+        self.pushButtonsetTime.setText(_translate("MainWindow", "Set device to system time", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.actionQuit.setText(_translate("MainWindow", "&Quit", None))

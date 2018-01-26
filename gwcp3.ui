@@ -351,6 +351,20 @@
           </widget>
          </item>
         </layout>
+	</item>
+	<item>
+        <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <item>
+          <widget class="QPushButton" name="pushButtonsetTime">
+           <property name="toolTip">
+            <string>Set device date and time</string>
+           </property>
+           <property name="text">
+            <string>Set device to system time</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_15"/>
