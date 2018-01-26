@@ -54,6 +54,32 @@ def getDate(ser):
     return datetime.datetime(*dsb).strftime("%Y-%m-%d %H:%M:%S")
 
 
+def setDate(ser, date):
+    """
+    Set the device date and time
+    """
+    year = int(date.strftime("%y"))
+    month = date.month
+    day = date.day
+    hour = date.hour
+    minute = date.minute
+    second = date.second
+
+    buf = struct.pack(">B", month)
+    rec = serialCOMM(ser, b'<SETDATEMM' + buf + '>>', 1, False)
+    buf = struct.pack(">B", day)
+    rec = serialCOMM(ser, b'<SETDATEDD' + buf + '>>', 1, False)
+    buf = struct.pack(">B", year)
+    rec = serialCOMM(ser, b'<SETDATEYY' + buf + '>>', 1, False)
+
+    buf = struct.pack(">B", hour)
+    rec = serialCOMM(ser, b'<SETTIMEHH' + buf + '>>', 1, False)
+    buf = struct.pack(">B", minute)
+    rec = serialCOMM(ser, b'<SETTIMEMM' + buf + '>>', 1, False)
+    buf = struct.pack(">B", second)
+    rec = serialCOMM(ser, b'<SETTIMESS' + buf + '>>', 1, False)
+
+
 def getSPIR(ser, address=0, datalength=4096):
     # by ullix
     # Request history data from internal flash memory

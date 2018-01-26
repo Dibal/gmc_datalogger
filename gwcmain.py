@@ -14,10 +14,11 @@ https://www.gnu.org/licenses/gpl-3.0.de.html
 
 from PyQt4 import QtGui  
 import sys  # required for argv to QApplication
-import gwcp3  # GUI layout file. Created by: qtuic4 gwcp3.ui >gwcp3.py
+import gwcp3  # GUI layout file. Created by: pyuic4 gwcp3.ui >gwcp3.py
 from gmcparse6 import *  # basic I/O routines
 import os  # directory methods
 import time
+import serial
 
 
 class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
@@ -62,6 +63,9 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         
         # time info
         self.pushButtongetTime.clicked.connect(self.timeinfo)
+
+        # set device time to system time
+        self.pushButtonsetTime.clicked.connect(self.setdevicetime)
         
         # live data
         self.pushButtonLiveData.setCheckable(True)
@@ -147,6 +151,17 @@ class GmcApp(QtGui.QMainWindow, gwcp3.Ui_MainWindow):
         print "(interface date: ", stime
         self.lineEditgetTime.setText(dtime)
         self.lineEditSystemTime.setText(stime)
+
+    def setdevicetime(self):
+        if not self.ser:
+            self.serialdev = str(self.lineEditsetDev.text())
+            self.speed = int(self.listWidgetspeed.currentItem().text())
+            self.ser = serial.Serial(self.serialdev, self.speed, timeout=3)
+        nowtime = datetime.datetime.now()
+        stime = "{:%Y-%m-%d %H:%M:%S}".format(nowtime)
+        print "(interface date: ", stime
+        self.lineEditSystemTime.setText(stime)
+        setDate(self.ser, nowtime)
             
     # requires pushButtonLiveData
     def livedata(self):
